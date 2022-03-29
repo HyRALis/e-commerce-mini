@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap");
+
+* {
+  font-family: "Istok Web", sans-serif;
+}
+
+.card {
+    background: #DFE1E1;
+    border-radius: 20px;
+    height: 400px;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    &::before {
+        background: #046A9C;
+        content: "";
+        height: 100%;
+        position: absolute;
+        top: -50%;
+        transform: skewY(345deg);
+        transition: 0.5s;
+        width: 100%;
+    }
+    &::after {
+        bottom: 0;
+        color: rgba(0, 0, 0, 0.1);
+        content: "PRODUCT";
+        font-size: 6em;
+        font-weight: 600;
+        left: 0;
+        position: absolute;
+    }
+    &:hover {
+        &::before {
+            top: -70%;
+            transform: skewY(390deg);
+        }
+        .imgBox img {
+            transform: scale(1.1);
+        }
+        .contentBox .buy {
+            top: 0;
+            opacity: 1;
+        }
+    }
+}
+
+.imgBox {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    img {
+        transition: .5s;
+    }
+}
+
+.contentBox {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.contentBox h3 {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.contentBox .price {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.contentBox .buy {
+    background: #046A9C;
+    border-radius: 30px;
+    color: #000000;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    opacity: 0;
+    padding: 10px 30px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    top: 100px;
+    transition: 0.5s;
+}
+
+.productImage {
+    border-radius: 50%;
+    height: 200px;
+    object-fit: cover;
+    width: 200px;
+}
