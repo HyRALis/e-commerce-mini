@@ -55,5 +55,14 @@
     .rotatesvg {
         transform: rotateX(180);
     }
+
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown{
+        &__container {
+            width: 100%;
+        }
+    }
 }
 

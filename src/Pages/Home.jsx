@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import Container from '../UI layer/Container';
 import Card from '../UI layer/Card';
 import Dropdown from '../UI layer/Dropdown';
+import Plus from '../UI layer/svg/Plus';
 
 import styles from '../styles/Pages/Home.module.scss';
-import Plus from '../UI layer/svg/Plus';
 
 export default function Home({ products, states, categories }) {
     const [selectedSortingState, setSelectedSortingState] = useState(null);
@@ -25,7 +25,7 @@ export default function Home({ products, states, categories }) {
                 alt="Hero"
             />
             <Container classes={'position-relative'}>
-                <div className={`${styles.actions__container} ml-2`}>
+                <div className={styles.actions__container}>
                     <div className={styles.sorting__container}>
                         <Dropdown
                             options={states}

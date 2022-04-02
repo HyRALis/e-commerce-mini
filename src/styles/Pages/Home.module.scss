@@ -54,6 +54,11 @@
     .home__heroImage {
         margin-bottom: -75px;
     }
+    .sorting__container,
+    .actions__container {
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+    }
 }
 
 @media screen and (max-width: 576px) {
