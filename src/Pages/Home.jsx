@@ -2,6 +2,7 @@ import React from 'react';
 
 import Container from '../UI layer/Container';
 import Card from '../UI layer/Card';
+import Dropdown from '../UI layer/Dropdown';
 
 import styles from '../styles/Pages/Home.module.scss';
 
@@ -20,6 +21,10 @@ export default function Home({ products, states, categories }) {
                 alt="Hero"
             />
             <Container>
+                <div className="">
+                    <Dropdown options={states} />
+                    <Dropdown options={categories} />
+                </div>
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">{productCards}</div>
             </Container>
         </>
