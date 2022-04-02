@@ -14,15 +14,12 @@
 .sorting__container,
 .actions__container {
     display: flex;
+    gap: 1em;
 }
 
 .actions__container {
     justify-content: space-between;
     margin-bottom: 1em;
-}
-
-.sorting__container {
-    gap: 1em;
 }
 
 .custom__button {
@@ -57,7 +54,6 @@
     .sorting__container,
     .actions__container {
         flex-direction: column;
-        margin-bottom: 0.5rem;
     }
 }
 
