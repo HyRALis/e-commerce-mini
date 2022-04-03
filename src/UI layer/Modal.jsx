@@ -4,7 +4,7 @@ import { useOnClickOutside } from '../Utils/customHooks';
 
 import styles from '../styles/UI layer/Modal.module.scss';
 
-function Modal({ setIsModalOpen, title }) {
+function Modal({ setIsModalOpen, title, children }) {
     const modalContainerRef = useRef(null);
 
     useOnClickOutside(modalContainerRef, () => setIsModalOpen(false));
@@ -13,6 +13,11 @@ function Modal({ setIsModalOpen, title }) {
         <div className={styles.modalBackground}>
             <div ref={modalContainerRef} className={styles.modalContainer}>
                 <div className={styles.titleCloseBtn}>
+                    {title && (
+                        <div className={styles.title}>
+                            <h1>{title}</h1>
+                        </div>
+                    )}
                     <button
                         onClick={() => {
                             setIsModalOpen(false);
@@ -21,11 +26,7 @@ function Modal({ setIsModalOpen, title }) {
                         X
                     </button>
                 </div>
-                {title && (
-                    <div className={styles.title}>
-                        <h1>{title}</h1>
-                    </div>
-                )}
+                {children}
             </div>
         </div>
     );
