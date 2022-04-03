@@ -25,7 +25,7 @@ export default function Dropdown({ options, placeholder, onSelectChnage }) {
         <div ref={dropdownRef} className={styles.dropdown__container}>
             <div className={styles.dropdown__header} aria-haspopup="listbox" aria-expanded={isOpen} onClick={toggling}>
                 <span>{selectedOption || placeholder}</span>
-                <ArrowDown fill="#3faffa" width="0.8rem" height="0.8rem" className={styles.rotatesvg} />
+                <ArrowDown fill="#F3837D" width="0.8rem" height="0.8rem" className={styles.rotatesvg} />
             </div>
             {isOpen && (
                 <ul className={styles.dropdown__list} role="listbox" tabIndex={-1}>

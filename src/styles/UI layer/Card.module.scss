@@ -12,7 +12,7 @@
     overflow: hidden;
     position: relative;
     &::before {
-        background: #046A9C;
+        background: #F3837D;
         content: "";
         height: 100%;
         position: absolute;
@@ -23,7 +23,7 @@
     }
     &::after {
         bottom: 0;
-        color: rgba(0, 0, 0, 0.1);
+        color: rgba(#F3837D, 0.4);
         content: "PRODUCT";
         font-size: 6em;
         font-weight: 600;
@@ -84,7 +84,7 @@
 }
 
 .contentBox .buy {
-    background: #046A9C;
+    background: #F3837D;
     border-radius: 30px;
     color: #000000;
     letter-spacing: 1px;

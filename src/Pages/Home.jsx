@@ -6,6 +6,7 @@ import Dropdown from '../UI layer/Dropdown';
 import Plus from '../UI layer/svg/Plus';
 
 import styles from '../styles/Pages/Home.module.scss';
+import heroImage from '../Assets/Hero.jpg';
 
 export default function Home({ products, states, categories }) {
     const [selectedSortingState, setSelectedSortingState] = useState(null);
@@ -19,11 +20,7 @@ export default function Home({ products, states, categories }) {
 
     return (
         <>
-            <img
-                className={styles.home__heroImage}
-                src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
-                alt="Hero"
-            />
+            <img className={styles.home__heroImage} src={heroImage} alt="Hero" />
             <Container classes={'position-relative'}>
                 <div className={styles.actions__container}>
                     <div className={styles.sorting__container}>
