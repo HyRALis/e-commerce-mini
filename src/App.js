@@ -26,25 +26,17 @@ function App() {
     }, []);
 
     return (
-        <>
-            <Router>
-                <Navbar />
-                <main className="mb-5">
-                    <Routes>
-                        <Route
-                            exact
-                            path="/"
-                            element={<Home products={products} states={states} categories={categories} />}
-                        />
-                        <Route
-                            exact
-                            path="/product/:productId"
-                            element={<SingleProductPage selectedProduct={selectedProduct} />}
-                        />
-                    </Routes>
-                </main>
-            </Router>
-        </>
+        <Router>
+            <Navbar />
+            <Routes>
+                <Route exact path="/" element={<Home products={products} states={states} categories={categories} />} />
+                <Route
+                    exact
+                    path="/product/:productId"
+                    element={<SingleProductPage selectedProduct={selectedProduct} />}
+                />
+            </Routes>
+        </Router>
     );
 }
 
