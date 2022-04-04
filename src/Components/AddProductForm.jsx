@@ -4,11 +4,20 @@ import { ALLOWED_VALUE, MIN_CHARS, MIN_VALUE, REQUIRED, VALID_URL } from '../Uti
 import { validateField } from '../Utils/validation';
 import { postProduct } from '../Utils/ajaxRequests';
 
-import { useValidateField } from '../Utils/customHooks';
+import { useValidateField, useOnUpdate } from '../Utils/customHooks';
 
 import Dropdown from '../UI layer/Dropdown';
 import TextInput from '../UI layer/Form Elements/TextInput';
 import ErrorMessage from '../UI layer/Form Elements/ErrorMessage';
+
+const initialErrors = {
+    state: '',
+    category: '',
+    title: '',
+    picture: '',
+    price: '',
+    description: ''
+};
 
 export default function AddProductForm({ states, categories, onAddProduct }) {
     const formInitialData = {
@@ -29,21 +38,23 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
     };
 
     const [formData, setFromData] = useState(formInitialData);
-    const [errors, setErrors] = useState({
-        state: '',
-        category: '',
-        title: '',
-        picture: '',
-        price: '',
-        description: ''
-    });
+    const [errors, setErrors] = useState(initialErrors);
 
-    useValidateField(formData, 'state', setErrors, errors);
-    useValidateField(formData, 'category', setErrors, errors);
-    useValidateField(formData, 'title', setErrors, errors);
-    useValidateField(formData, 'picture', setErrors, errors);
-    useValidateField(formData, 'price', setErrors, errors);
-    useValidateField(formData, 'description', setErrors, errors);
+    useValidateField(formData, 'state', setErrors, []);
+    useValidateField(formData, 'category', setErrors, []);
+    useValidateField(formData, 'title', setErrors, []);
+    useValidateField(formData, 'picture', setErrors, []);
+    useValidateField(formData, 'price', setErrors, [formData.state]);
+    useValidateField(formData, 'description', setErrors, []);
+
+    useOnUpdate(() => {
+        const selectedState = states.find((state) => state.name === formData.state.value);
+        const minAllowedValue = selectedState.tax > 0.25 ? 7 : 4;
+        setFromData((currentFormData) => ({
+            ...currentFormData,
+            price: { ...currentFormData.price, minAllowedValue }
+        }));
+    }, [formData.state]);
 
     const addProduct = async (e) => {
         e.preventDefault();
@@ -89,7 +100,10 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         containerStyle={{ width: '100%' }}
                         hasError={errors.state}
                         onSelectChnage={({ name }) => {
-                            setFromData({ ...formData, state: { ...formData.state, value: name } });
+                            setFromData((currentFormData) => ({
+                                ...currentFormData,
+                                state: { ...formData.state, value: name }
+                            }));
                         }}
                     />
                     {errors.state && <ErrorMessage errorMessage={errors.state} />}
@@ -103,7 +117,10 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         containerStyle={{ width: '100%' }}
                         hasError={errors.category}
                         onSelectChnage={({ name }) => {
-                            setFromData({ ...formData, category: { ...formData.category, value: name } });
+                            setFromData((currentFormData) => ({
+                                ...currentFormData,
+                                category: { ...formData.category, value: name }
+                            }));
                         }}
                     />
                     {errors.category && <ErrorMessage errorMessage={errors.category} />}
@@ -114,7 +131,10 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         value={formData.title.value}
                         hasError={errors.title}
                         onChange={(changedValue) => {
-                            setFromData({ ...formData, title: { ...formData.title, value: changedValue } });
+                            setFromData((currentFormData) => ({
+                                ...currentFormData,
+                                title: { ...formData.title, value: changedValue }
+                            }));
                         }}
                     />
                     {errors.title && <ErrorMessage errorMessage={errors.title} />}
@@ -125,7 +145,10 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         value={formData.price.value}
                         hasError={errors.price}
                         onChange={(changedValue) => {
-                            setFromData({ ...formData, price: { ...formData.price, value: changedValue } });
+                            setFromData((currentFormData) => ({
+                                ...currentFormData,
+                                price: { ...formData.price, value: changedValue }
+                            }));
                         }}
                     />
                     {errors.price && <ErrorMessage errorMessage={errors.price} />}
@@ -136,7 +159,10 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         value={formData.picture.value}
                         hasError={errors.picture}
                         onChange={(changedValue) => {
-                            setFromData({ ...formData, picture: { ...formData.picture, value: changedValue } });
+                            setFromData((currentFormData) => ({
+                                ...currentFormData,
+                                picture: { ...formData.picture, value: changedValue }
+                            }));
                         }}
                     />
                     {errors.picture && <ErrorMessage errorMessage={errors.picture} />}
@@ -147,7 +173,10 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         value={formData.description.value}
                         hasError={errors.description}
                         onChange={(changedValue) => {
-                            setFromData({ ...formData, description: { ...formData.description, value: changedValue } });
+                            setFromData((currentFormData) => ({
+                                ...currentFormData,
+                                description: { ...formData.description, value: changedValue }
+                            }));
                         }}
                     />
                     {errors.description && <ErrorMessage errorMessage={errors.description} />}

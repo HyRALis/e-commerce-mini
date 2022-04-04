@@ -16,8 +16,8 @@ export default function Home({ products, states, categories, onAddProduct }) {
     const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
 
     const productCards = products.map((product) => (
-        <div className="col mb-4">
-            <Card key={`product_card_${product.id}`} product={product} />
+        <div key={`product_card_${product.id}`} className="col mb-4">
+            <Card product={product} />
         </div>
     ));
 

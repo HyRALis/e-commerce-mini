@@ -10,12 +10,11 @@ export const validateField = (field) => {
         if (!isValid) break;
         const validCheck = isValidValue(field, field.validationTypes[index]);
         isValid = validCheck.isValid;
-        errorMessage = validCheck.errorMessage;
+        errorMessage = isValid ? '' : validCheck.errorMessage;
     }
 
     return { isValid, errorMessage };
 };
-
 
 export const isValidValue = (
     { value, minAllowedValue = null, minAllowedChars = null, allowedValues = [] },
@@ -54,7 +53,6 @@ export const isValidValue = (
 };
 
 export const validateRequired = (value) => {
-    console.log(!!value);
     return !!value;
 };
 

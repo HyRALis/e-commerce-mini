@@ -44,13 +44,10 @@ export const useOnClickOutside = (ref, handler) => {
     );
 };
 
-export const useValidateField = (formData, fieldName, setError, errors) => {
+export const useValidateField = (formData, fieldName, setError, dependencies) => {
     useOnUpdate(() => {
-        const { isValid, errorMessage } = validateField(formData[fieldName]);
-        if (!isValid) {
-            setError({ ...errors, [fieldName]: errorMessage });
-        } else {
-            setError({ ...errors, [fieldName]: '' });
-        }
-    }, [formData[fieldName]]);
+        let { isValid, errorMessage } = validateField(formData[fieldName]);
+        errorMessage = !isValid ? errorMessage : '';
+        setError((currentErrors) => ({ ...currentErrors, [fieldName]: errorMessage }));
+    }, [formData[fieldName], ...dependencies]);
 };
