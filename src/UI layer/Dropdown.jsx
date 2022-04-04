@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+
+import ArrowDown from './svg/ArrowDown';
 
 import { useOnClickOutside } from '../Utils/customHooks';
 
 import styles from '../styles/UI layer/Dropdown.module.scss';
-import ArrowDown from './svg/ArrowDown';
 
-export default function Dropdown({ options, placeholder, onSelectChnage }) {
+export default function Dropdown({ options, placeholder, onSelectChnage, selected = null, containerStyle }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState(selected);
 
     const dropdownRef = useRef(null);
 
@@ -22,7 +23,7 @@ export default function Dropdown({ options, placeholder, onSelectChnage }) {
     useOnClickOutside(dropdownRef, () => setIsOpen(false));
 
     return (
-        <div ref={dropdownRef} className={styles.dropdown__container}>
+        <div ref={dropdownRef} className={styles.dropdown__container} style={containerStyle}>
             <div className={styles.dropdown__header} aria-haspopup="listbox" aria-expanded={isOpen} onClick={toggling}>
                 <span>{selectedOption || placeholder}</span>
                 <ArrowDown fill="#F3837D" width="0.8rem" height="0.8rem" className={styles.rotatesvg} />
