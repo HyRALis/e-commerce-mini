@@ -1,6 +1,22 @@
 import { ALLOWED_VALUE, MIN_CHARS, MIN_VALUE, REQUIRED, VALID_URL } from './consts';
 
 // FORM VALIDATION
+export const validateField = (field) => {
+    if (!field.validationTypes) return true;
+
+    let isValid = true;
+    let errorMessage = '';
+    for (let index = 0; index < field.validationTypes.length; index++) {
+        if (!isValid) break;
+        const validCheck = isValidValue(field, field.validationTypes[index]);
+        isValid = validCheck.isValid;
+        errorMessage = validCheck.errorMessage;
+    }
+
+    return { isValid, errorMessage };
+};
+
+
 export const isValidValue = (
     { value, minAllowedValue = null, minAllowedChars = null, allowedValues = [] },
     validationType

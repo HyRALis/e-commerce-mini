@@ -10,7 +10,7 @@ import heroImage from '../Assets/Hero.jpg';
 import Modal from '../UI layer/Modal';
 import AddProductForm from '../Components/AddProductForm';
 
-export default function Home({ products, states, categories }) {
+export default function Home({ products, states, categories, onAddProduct }) {
     const [selectedSortingState, setSelectedSortingState] = useState(null);
     const [selectedSortingCategory, setSelectedSortingCategory] = useState(null);
     const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
@@ -48,8 +48,8 @@ export default function Home({ products, states, categories }) {
                 </Container>
             </main>
             {isAddProductModalOpen && (
-                <Modal title="This is a form" setIsModalOpen={setIsAddProductModalOpen}>
-                    <AddProductForm states={states} categories={categories} />{' '}
+                <Modal title="Add product form" setIsModalOpen={setIsAddProductModalOpen}>
+                    <AddProductForm states={states} categories={categories} onAddProduct={onAddProduct} />{' '}
                 </Modal>
             )}
         </>

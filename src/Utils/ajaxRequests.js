@@ -68,3 +68,14 @@ export const getCategories = async () => {
     const response = await apiCall('get', '/categories');
     return response;
 };
+
+/**
+ * Method that posts new products
+ *
+ * @param {any} data 
+ * @returns {Object || null}
+ */
+export const postProduct = async (data) => {
+    const response = await apiCall('post', '/products', data);
+    return response;
+};

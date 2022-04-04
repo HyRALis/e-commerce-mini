@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { isValidValue } from './validation';
+import { isValidValue, validateField } from './validation';
 
 export const useOnUpdate = (callback, dependencies) => {
     const isInitialMount = useRef(true);
@@ -44,28 +44,13 @@ export const useOnClickOutside = (ref, handler) => {
     );
 };
 
-export const useValidateField = (field, fieldName, setError, errors) => {
-    const validateField = (field) => {
-        if (!field.validationTypes) return true;
-
-        let isValid = true;
-        let errorMessage = '';
-        for (let index = 0; index < field.validationTypes.length; index++) {
-            if (!isValid) break;
-            const validCheck = isValidValue(field, field.validationTypes[index]);
-            isValid = validCheck.isValid;
-            errorMessage = validCheck.errorMessage;
-        }
-
-        return { isValid, errorMessage };
-    };
-
+export const useValidateField = (formData, fieldName, setError, errors) => {
     useOnUpdate(() => {
-        const { isValid, errorMessage } = validateField(field);
+        const { isValid, errorMessage } = validateField(formData[fieldName]);
         if (!isValid) {
             setError({ ...errors, [fieldName]: errorMessage });
         } else {
             setError({ ...errors, [fieldName]: '' });
         }
-    }, [field]);
+    }, [formData[fieldName]]);
 };

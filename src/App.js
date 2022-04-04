@@ -27,11 +27,26 @@ function App() {
         fetchDatabase();
     }, []);
 
+    const addNewProduct = (newProduct) => {
+        setProducts([...products, newProduct]);
+    };
+
     return (
         <Router>
             <Navbar />
             <Routes>
-                <Route exact path="/" element={<Home products={products} states={states} categories={categories} />} />
+                <Route
+                    exact
+                    path="/"
+                    element={
+                        <Home
+                            products={products}
+                            states={states}
+                            categories={categories}
+                            onAddProduct={addNewProduct}
+                        />
+                    }
+                />
                 <Route
                     exact
                     path="/product/:productId"
