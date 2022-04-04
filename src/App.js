@@ -7,6 +7,8 @@ import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import SingleProductPage from './Pages/SingleProductPage';
 
+import './styles/styles.scss';
+
 function App() {
     const [products, setProducts] = useState([]);
     const [states, setStates] = useState([]);
