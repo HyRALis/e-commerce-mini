@@ -29,6 +29,9 @@
         justify-content: space-between;
         padding: 0.6em 0.8em;
         transition: 0.5s;
+        &.error {
+            border: 2px solid red;
+        }
     }
 
     &__list {

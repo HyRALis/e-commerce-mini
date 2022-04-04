@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 
+import Times from './svg/Times';
+
 import { useOnClickOutside } from '../Utils/customHooks';
 
 import styles from '../styles/UI layer/Modal.module.scss';
@@ -23,7 +25,7 @@ function Modal({ setIsModalOpen, title, children }) {
                             setIsModalOpen(false);
                         }}
                     >
-                        X
+                        <Times fill="#000000" width="1rem" height="1rem" className="ml-2" />
                     </button>
                 </div>
                 {children}

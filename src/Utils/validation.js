@@ -54,6 +54,7 @@ export const isValidValue = (
 };
 
 export const validateRequired = (value) => {
+    console.log(!!value);
     return !!value;
 };
 

@@ -8,6 +8,7 @@ import { useValidateField } from '../Utils/customHooks';
 
 import Dropdown from '../UI layer/Dropdown';
 import TextInput from '../UI layer/Form Elements/TextInput';
+import ErrorMessage from '../UI layer/Form Elements/ErrorMessage';
 
 export default function AddProductForm({ states, categories, onAddProduct }) {
     const formInitialData = {
@@ -44,15 +45,16 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
     useValidateField(formData, 'price', setErrors, errors);
     useValidateField(formData, 'description', setErrors, errors);
 
-    const addProduct = (e) => {
+    const addProduct = async (e) => {
         e.preventDefault();
 
         let hasErrors = false;
         Object.keys(formData).forEach((key) => {
             const { isValid, errorMessage } = validateField(formData[key]);
+
             if (!isValid) {
                 hasErrors = true;
-                setErrors({ ...errors, [key]: errorMessage });
+                setErrors((currentErrors) => ({ ...currentErrors, [key]: errorMessage }));
             }
         });
 
@@ -70,8 +72,8 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
             dataToSend.stateId = productState.id;
             dataToSend.categoryId = productCategory.id;
 
-            postProduct(dataToSend);
-            onAddProduct(dataToSend);
+            const data = await postProduct(dataToSend);
+            onAddProduct(data);
         }
     };
 
@@ -79,66 +81,78 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
         <form className="mt-5" onSubmit={addProduct}>
             <div className="row">
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
-                    <label>State</label>
+                    <label>State *</label>
                     <Dropdown
                         options={states}
                         selected={formData.state.value}
                         placeholder="Select state"
                         containerStyle={{ width: '100%' }}
+                        hasError={errors.state}
                         onSelectChnage={({ name }) => {
-                            // setFormState({ ...formState, value: name });
                             setFromData({ ...formData, state: { ...formData.state, value: name } });
                         }}
                     />
+                    {errors.state && <ErrorMessage errorMessage={errors.state} />}
                 </div>
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
-                    <label>Categories</label>
+                    <label>Categories *</label>
                     <Dropdown
                         options={categories}
                         selected={formData.category.value}
                         placeholder="Select category"
                         containerStyle={{ width: '100%' }}
+                        hasError={errors.category}
                         onSelectChnage={({ name }) => {
                             setFromData({ ...formData, category: { ...formData.category, value: name } });
                         }}
                     />
+                    {errors.category && <ErrorMessage errorMessage={errors.category} />}
                 </div>
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
-                    <label>Tilte</label>
+                    <label>Tilte *</label>
                     <TextInput
                         value={formData.title.value}
+                        hasError={errors.title}
                         onChange={(changedValue) => {
                             setFromData({ ...formData, title: { ...formData.title, value: changedValue } });
                         }}
                     />
+                    {errors.title && <ErrorMessage errorMessage={errors.title} />}
                 </div>
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
-                    <label>Price</label>
+                    <label>Price *</label>
                     <TextInput
                         value={formData.price.value}
+                        hasError={errors.price}
                         onChange={(changedValue) => {
                             setFromData({ ...formData, price: { ...formData.price, value: changedValue } });
                         }}
                     />
+                    {errors.price && <ErrorMessage errorMessage={errors.price} />}
                 </div>
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
-                    <label>Image URL</label>
+                    <label>Image URL *</label>
                     <TextInput
                         value={formData.picture.value}
+                        hasError={errors.picture}
                         onChange={(changedValue) => {
                             setFromData({ ...formData, picture: { ...formData.picture, value: changedValue } });
                         }}
                     />
+                    {errors.picture && <ErrorMessage errorMessage={errors.picture} />}
                 </div>
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
                     <label>Description</label>
                     <TextInput
                         value={formData.description.value}
+                        hasError={errors.description}
                         onChange={(changedValue) => {
                             setFromData({ ...formData, description: { ...formData.description, value: changedValue } });
                         }}
                     />
+                    {errors.description && <ErrorMessage errorMessage={errors.description} />}
                 </div>
+                <div className="col-12 fs-6">* - required fields</div>
             </div>
             <div className="d-flex justify-content-center">
                 <input type="submit" className="mt-5 custom__button" value="Add product" />
