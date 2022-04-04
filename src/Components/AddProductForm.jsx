@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { ALLOWED_VALUE, MIN_CHARS, MIN_VALUE, REQUIRED, VALID_URL } from '../Utils/consts';
 import { validateField } from '../Utils/validation';
@@ -47,9 +47,17 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
     useValidateField(formData, 'price', setErrors, [formData.state]);
     useValidateField(formData, 'description', setErrors, []);
 
+    const memoizedProductState = useMemo(
+        () => states.find((state) => state.name === formData.state.value),
+        [states, formData.state.value]
+    );
+    const memoizedProductCategory = useMemo(
+        () => categories.find((category) => category.name === formData.category.value),
+        [categories, formData.category.value]
+    );
+
     useOnUpdate(() => {
-        const selectedState = states.find((state) => state.name === formData.state.value);
-        const minAllowedValue = selectedState.tax > 0.25 ? 7 : 4;
+        const minAllowedValue = memoizedProductState.tax > 0.25 ? 7 : 4;
         setFromData((currentFormData) => ({
             ...currentFormData,
             price: { ...currentFormData.price, minAllowedValue }
@@ -60,32 +68,31 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
         e.preventDefault();
 
         let hasErrors = false;
+
         Object.keys(formData).forEach((key) => {
             const { isValid, errorMessage } = validateField(formData[key]);
-
-            if (!isValid) {
-                hasErrors = true;
-                setErrors((currentErrors) => ({ ...currentErrors, [key]: errorMessage }));
-            }
+            hasErrors = !isValid;
+            hasErrors && setErrors((currentErrors) => ({ ...currentErrors, [key]: errorMessage }));
         });
 
         if (!hasErrors) {
-            const productState = states.find((state) => state.name === formData.state.value);
-            const productCategory = categories.find((category) => category.name === formData.category.value);
-
-            let dataToSend = {};
-
-            Object.keys(formData).forEach((key) => {
-                if (key !== 'category' && key !== 'state') {
-                    dataToSend[key] = formData[key].value;
-                }
-            });
-            dataToSend.stateId = productState.id;
-            dataToSend.categoryId = productCategory.id;
-
-            const data = await postProduct(dataToSend);
+            const data = await postProduct(requestBodyFromFormData());
             onAddProduct(data);
         }
+    };
+
+    const requestBodyFromFormData = () => {
+        let requestBody = {};
+
+        Object.keys(formData).forEach((key) => {
+            if (key !== 'category' && key !== 'state') {
+                requestBody[key] = formData[key].value;
+            }
+        });
+        requestBody.stateId = memoizedProductState.id;
+        requestBody.categoryId = memoizedProductCategory.id;
+
+        return requestBody;
     };
 
     return (
