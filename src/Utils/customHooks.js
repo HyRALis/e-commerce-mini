@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { isValidValue, validateField } from './validation';
+import { validateField } from './validation';
 
 export const useOnUpdate = (callback, dependencies) => {
     const isInitialMount = useRef(true);
