@@ -6,7 +6,7 @@ import { useOnClickOutside } from '../Utils/customHooks';
 
 import styles from '../styles/UI layer/Dropdown.module.scss';
 
-export default function Dropdown({ options, placeholder, onSelectChnage, selected = null, containerStyle, hasError }) {
+export default function Dropdown({ options, placeholder, onSelectChange, selected = null, containerStyle, hasError }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(selected);
     const headerClass = useMemo(
@@ -21,7 +21,7 @@ export default function Dropdown({ options, placeholder, onSelectChnage, selecte
     const onOptionClicked = (option) => () => {
         setSelectedOption(option.name);
         setIsOpen(false);
-        onSelectChnage(option);
+        onSelectChange(option);
     };
 
     useOnClickOutside(dropdownRef, () => setIsOpen(false));
