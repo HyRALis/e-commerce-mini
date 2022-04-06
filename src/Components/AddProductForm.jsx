@@ -1,8 +1,10 @@
 import React, { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { addProduct } from '../Store/Actions/mainActions';
+import { setIsAddProductModalOpen } from '../Store/Actions/homeActions';
 import { ALLOWED_VALUE, MIN_CHARS, MIN_VALUE, REQUIRED, VALID_URL } from '../Utils/consts';
 import { validateField } from '../Utils/validation';
-import { postProduct } from '../Utils/ajaxRequests';
 
 import { useValidateField, useOnUpdate } from '../Utils/customHooks';
 
@@ -19,7 +21,12 @@ const initialErrors = {
     description: ''
 };
 
-export default function AddProductForm({ states, categories, onAddProduct }) {
+export default function AddProductForm() {
+    const dispacth = useDispatch();
+
+    const states = useSelector(({ global }) => global.states);
+    const categories = useSelector(({ global }) => global.categories);
+
     const formInitialData = {
         state: {
             value: null,
@@ -64,7 +71,7 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
         }));
     }, [formData.state]);
 
-    const addProduct = async (e) => {
+    const postProduct = async (e) => {
         e.preventDefault();
 
         let hasErrors = false;
@@ -76,8 +83,8 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
         });
 
         if (!hasErrors) {
-            const data = await postProduct(requestBodyFromFormData());
-            onAddProduct(data);
+            dispacth(addProduct(requestBodyFromFormData()));
+            dispacth(setIsAddProductModalOpen(false));
         }
     };
 
@@ -96,7 +103,7 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
     };
 
     return (
-        <form className="mt-5" onSubmit={addProduct}>
+        <form className="mt-5" onSubmit={postProduct}>
             <div className="row">
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
                     <label>State *</label>
@@ -106,7 +113,7 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         placeholder="Select state"
                         containerStyle={{ width: '100%' }}
                         hasError={errors.state}
-                        onSelectChnage={({ name }) => {
+                        onSelectChange={({ name }) => {
                             setFromData((currentFormData) => ({
                                 ...currentFormData,
                                 state: { ...formData.state, value: name }
@@ -123,7 +130,7 @@ export default function AddProductForm({ states, categories, onAddProduct }) {
                         placeholder="Select category"
                         containerStyle={{ width: '100%' }}
                         hasError={errors.category}
-                        onSelectChnage={({ name }) => {
+                        onSelectChange={({ name }) => {
                             setFromData((currentFormData) => ({
                                 ...currentFormData,
                                 category: { ...formData.category, value: name }
