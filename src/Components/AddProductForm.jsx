@@ -162,7 +162,7 @@ export default function AddProductForm() {
                         onChange={(changedValue) => {
                             setFromData((currentFormData) => ({
                                 ...currentFormData,
-                                price: { ...formData.price, value: changedValue }
+                                price: { ...formData.price, value: parseFloat(changedValue) }
                             }));
                         }}
                     />

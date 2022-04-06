@@ -50,15 +50,15 @@ export default function Home() {
     const sortBy = (array, property, order) => {
         if (array.length <= 1) return array;
         return array.sort((firstElement, secondElement) => {
-            if (property === 'title') {
+            if (typeof firstElement[property] === 'string' && typeof secondElement[property] === 'string') {
                 const el1 = firstElement[property].toLowerCase();
                 const el2 = secondElement[property].toLowerCase();
 
                 return order < 1 ? el1 > el2 : el1 < el2;
             }
-            if (property === 'price') {
-                const el1 = parseFloat(firstElement[property]);
-                const el2 = parseFloat(secondElement[property]);
+            if (typeof firstElement[property] === 'number' && typeof secondElement[property] === 'number') {
+                const el1 = parseInt(firstElement[property]);
+                const el2 = parseInt(secondElement[property]);
 
                 return order < 1 ? el1 > el2 : el1 < el2;
             }
