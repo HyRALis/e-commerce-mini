@@ -1,5 +1,12 @@
 import { getDatabase, getProducts, getStates, getCategories, postProduct } from '../../Utils/ajaxRequests';
-import { ADD_PRODUCT, FETCH_CATEGORIES, FETCH_DATABASE, FETCH_STATES, SET_PRODUCTS } from '../actionsConsts';
+import {
+    ADD_PRODUCT,
+    FETCH_CATEGORIES,
+    FETCH_DATABASE,
+    FETCH_STATES,
+    SET_PRODUCTS,
+    SET_SELECTED_PRODUCT
+} from '../actionsConsts';
 
 export const fetchDatabase = () => async (dispatch) => {
     const database = await getDatabase();
@@ -43,5 +50,12 @@ export const addProduct = (newProduct) => async (dispatch) => {
     await dispatch({
         type: ADD_PRODUCT,
         payload: data
+    });
+};
+
+export const setSelectedProduct = (product) => (dispatch) => {
+    dispatch({
+        type: SET_SELECTED_PRODUCT,
+        payload: product
     });
 };

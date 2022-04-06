@@ -1,8 +1,20 @@
-import { SET_IS_ADD_PRODUCT_MODAL_OPEN, SET_SORT_BY_NAME, SET_SORT_BY_PRICE } from '../actionsConsts';
+import {
+    SET_IS_ADD_PRODUCT_MODAL_OPEN,
+    SET_IS_SINGLE_PRODUCT_MODAL_OPEN,
+    SET_SORT_BY_NAME,
+    SET_SORT_BY_PRICE
+} from '../actionsConsts';
 
 export const setIsAddProductModalOpen = (booleanValue) => (dispatch) => {
     dispatch({
         type: SET_IS_ADD_PRODUCT_MODAL_OPEN,
+        payload: booleanValue
+    });
+};
+
+export const setIsSingleProductModalOpen = (booleanValue) => (dispatch) => {
+    dispatch({
+        type: SET_IS_SINGLE_PRODUCT_MODAL_OPEN,
         payload: booleanValue
     });
 };

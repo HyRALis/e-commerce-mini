@@ -2,11 +2,11 @@ import React from 'react';
 
 import styles from '../styles/UI layer/Card.module.scss';
 
-export default function Card({ product }) {
+export default function Card({ product, onClick }) {
     const { title, price, picture } = product;
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={onClick}>
             <div className={styles.imgBox}>
                 <img src={picture} alt={title} className={styles.productImage} />
             </div>

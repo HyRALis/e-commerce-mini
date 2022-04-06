@@ -1,7 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setIsAddProductModalOpen, setSortByState, setSortByCategory } from '../Store/Actions/homeActions';
+import {
+    setIsAddProductModalOpen,
+    setSortByState,
+    setSortByCategory,
+    setIsSingleProductModalOpen
+} from '../Store/Actions/homeActions';
 import { sortingOptions } from '../Utils/consts';
 
 import Container from '../UI layer/Container';
@@ -10,21 +15,34 @@ import Dropdown from '../UI layer/Dropdown';
 import Plus from '../UI layer/svg/Plus';
 import Modal from '../UI layer/Modal';
 import AddProductForm from '../Components/AddProductForm';
+import SingleProduct from '../Components/SingleProduct';
 
 import styles from '../styles/Pages/Home.module.scss';
 import heroImage from '../Assets/Hero.jpg';
+import { setSelectedProduct } from '../Store/Actions/mainActions';
 
 export default function Home() {
     const dispatch = useDispatch();
 
     const products = useSelector(({ global }) => global.products);
     const isAddProductModalOpen = useSelector(({ home }) => home.isAddProductModalOpen);
+    const isSingleProductModalOpen = useSelector(({ home }) => home.isSingleProductModalOpen);
     const sortByState = useSelector(({ global }) => global.sortByState);
     const sortByPrice = useSelector(({ global }) => global.sortByPrice);
 
+    const onCardClick = (product) => {
+        dispatch(setSelectedProduct(product));
+        dispatch(setIsSingleProductModalOpen(true));
+    };
+
+    const onSingleProductModalClose = () => {
+        dispatch(setIsSingleProductModalOpen(false));
+        dispatch(setSelectedProduct(null));
+    };
+
     const productCards = products.map((product) => (
         <div key={`product_card_${product.id}`} className="col mb-4">
-            <Card product={product} />
+            <Card product={product} onClick={() => onCardClick(product)} />
         </div>
     ));
 
@@ -57,6 +75,11 @@ export default function Home() {
             {isAddProductModalOpen && (
                 <Modal title="Add product form" setIsModalOpen={(isOpen) => dispatch(setIsAddProductModalOpen(isOpen))}>
                     <AddProductForm />{' '}
+                </Modal>
+            )}
+            {isSingleProductModalOpen && (
+                <Modal setIsModalOpen={() => onSingleProductModalClose()}>
+                    <SingleProduct />
                 </Modal>
             )}
         </>
