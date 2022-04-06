@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -50,16 +50,17 @@ export default function Home() {
     const sortBy = (array, property, order) => {
         if (array.length <= 1) return array;
         return array.sort((firstElement, secondElement) => {
-            if (typeof firstElement[property] === 'string' && typeof secondElement[property] === 'string') {
+            if (property === 'title') {
                 const el1 = firstElement[property].toLowerCase();
                 const el2 = secondElement[property].toLowerCase();
+
                 return order < 1 ? el1 > el2 : el1 < el2;
             }
-            if (typeof firstElement[property] === 'number' && typeof secondElement[property] === 'number') {
-                if (order < 1) {
-                    return firstElement[property] > secondElement[property];
-                }
-                return firstElement[property] < secondElement[property];
+            if (property === 'price') {
+                const el1 = parseFloat(firstElement[property]);
+                const el2 = parseFloat(secondElement[property]);
+
+                return order < 1 ? el1 > el2 : el1 < el2;
             }
 
             return 1;

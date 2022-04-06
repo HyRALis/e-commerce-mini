@@ -156,6 +156,7 @@ export default function AddProductForm() {
                 <div className="col-12 col-md-6 d-flex flex-column mb-2">
                     <label>Price *</label>
                     <TextInput
+                        type="number"
                         value={formData.price.value}
                         hasError={errors.price}
                         onChange={(changedValue) => {
