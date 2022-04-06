@@ -8,7 +8,7 @@ import {
 const initialState = {
     isAddProductModalOpen: false,
     isSingleProductModalOpen: false,
-    sortByState: null,
+    sortByName: null,
     sortByPrice: null
 };
 
@@ -27,7 +27,7 @@ const reducer = (state = initialState, { type, payload }) => {
         case SET_SORT_BY_NAME:
             return {
                 ...state,
-                sortByState: payload
+                sortByName: payload
             };
         case SET_SORT_BY_PRICE:
             return {

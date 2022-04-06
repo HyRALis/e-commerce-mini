@@ -19,14 +19,14 @@ export const setIsSingleProductModalOpen = (booleanValue) => (dispatch) => {
     });
 };
 
-export const setSortByState = (value) => (dispatch) => {
+export const setSortByName = (value) => (dispatch) => {
     dispatch({
         type: SET_SORT_BY_NAME,
         payload: value
     });
 };
 
-export const setSortByCategory = (value) => (dispatch) => {
+export const setSortByPrice = (value) => (dispatch) => {
     dispatch({
         type: SET_SORT_BY_PRICE,
         payload: value
